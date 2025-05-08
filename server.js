@@ -52,6 +52,7 @@ function haversineDistance(lat1, lon1, lat2, lon2) {
 app.use(cors());
 app.use(express.json());
 const db=require('./models')
+db.sequelize.sync({ alter: true });
 
 const {Sites}=require('./models'); // ✅ Correctly reference Sites from db
 const { where } = require("sequelize");
@@ -72,14 +73,16 @@ app.post('/insert', async(req, res) => {
                 hba: item[keys[4]],
                 distance: item[keys[5]],
                 nombre_antenne: item[keys[6]],
-                longitude: item[keys[7]],
-                latitude: item[keys[8]],
-                elevation: item[keys[9]],
-                adresse: item[keys[10]],
-                building_heigh: item[keys[11]],
-                tower_high: item[keys[12]],
-                site_type: item[keys[13]],
-                site_state: item[keys[14]]
+                
+                longitude: item[keys[8]],
+                latitude: item[keys[9]],
+                elevation: item[keys[10]],
+                adresse: item[keys[11]],
+                building_heigh: item[keys[12]],
+                tower_high: item[keys[13]],
+                site_type: item[keys[14]],
+                site_state: item[keys[15]],
+                Antenne:item[keys[7]],
             });
 
             inserted.push(site);
@@ -145,31 +148,35 @@ app.post('/new',async(req, res) => {
             hba: data[keys[2]],
             distance: dis,
             nombre_antenne: data[keys[3]],
-            longitude: data[keys[4]],
-            latitude: data[keys[5]],
-            elevation: data[keys[6]],
-            adresse: data[keys[7]],
-            building_heigh: data[keys[8]],
-            tower_high: data[keys[9]],
-            site_type: data[keys[10]],
-            site_state: data[keys[11]]
+            Antenne: data[keys[4]],
+            longitude: data[keys[5]],
+            latitude: data[keys[6]],
+            elevation: data[keys[7]],
+            adresse: data[keys[8]],
+            building_heigh: data[keys[9]],
+          
+            tower_high: data[keys[10]],
+            site_type: data[keys[11]],
+            site_state: data[keys[12]]
         });
         const site2 = await Sites.create({
             site_number: site[0].site_number,
-            site_name:site[0].site_name,
-            farEnd: data[keys[0]],
-            azimut: azimuth+180,
+            site_name: site[0].site_name,
+            farEnd: site[0].farEnd,
+            azimut: (azimuth+180>=360?(azimuth-180):(azimuth+180)),
             hba: site[0].hba,
             distance: dis,
-            nombre_antenne:site[0].nombre_antenne,
+            nombre_antenne: site[0].nombre_antenne,
+            Antenne: site[0].Antenne,
             longitude: site[0].longitude,
             latitude: site[0].latitude,
             elevation: site[0].elevation,
             adresse: site[0].adresse,
             building_heigh: site[0].building_heigh,
             tower_high: site[0].tower_high,
-            site_type:site[0].site_type,
-            site_state: site[0].site_state
+            site_type: site[0].site_type,
+            site_state:site[0].site_state,
+            
         });
 
         res.json({ distance: dis ,azimuth:azimuth});

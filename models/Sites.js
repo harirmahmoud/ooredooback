@@ -51,6 +51,13 @@ module.exports = (sequelize) => {
                 notEmpty: true,
             }
         },
+        Antenne:{
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            }
+        },
         longitude: {
             type: DataTypes.DOUBLE,
             allowNull: false,
