@@ -4,6 +4,7 @@
     "password": "fqRyoYwAA1K8ac5L3Hmo",
     "database": "btvrvjesiwkrkcjumuqs",
     "host": "btvrvjesiwkrkcjumuqs-mysql.services.clever-cloud.com",
+    "port": 3306,
     "dialect": "mysql"
   },
   "test": {
