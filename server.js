@@ -2,9 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-export default function handler(req, res) {
-    res.status(200).json({ message: "Working!" });
-  }
+
 
 const serverless = require("serverless-http");
 
